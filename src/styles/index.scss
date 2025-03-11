@@ -1,0 +1,13 @@
+//引入去除默认样式
+//sass使用@use，less使用@import
+@use './reset.scss';
+/* 自定义滚动条样式（仅适用于 WebKit 内核浏览器） */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: purple;
+}
+::-webkit-scrollbar-thumb {
+  background: green;
+}
