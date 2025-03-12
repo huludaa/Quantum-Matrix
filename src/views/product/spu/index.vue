@@ -1,5 +1,3 @@
-<!-- TODO:页面显示不全；category分类下拉框改变，spu内容不消失 -->
-<!-- 再做一次spu的所有，几乎没看懂 -->
 <template>
   <div>
     <div><Category :scene="scene"></Category></div>
