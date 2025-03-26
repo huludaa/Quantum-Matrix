@@ -31,7 +31,7 @@
           -->
       <el-upload
         v-model:file-list="imgList"
-        action="/api/admin/product/fileUpload"
+        action="/api/product/fileUpload"
         list-type="picture-card"
         :on-preview="handlePictureCardPreview"
         :on-remove="handleRemove"
@@ -108,7 +108,7 @@
               type="primary"
               size="small"
               icon="Delete"
-              @click="saleAttr.splice(index, 1)"
+              @click="deleteSaleAttr(row.baseSaleAttrId)"
             ></el-button>
           </template>
         </el-table-column>
@@ -351,6 +351,7 @@ const initAddSpu = async (c3Id: number | string) => {
     tmId: '', //品牌的ID
     spuImageList: [],
     spuSaleAttrList: [],
+    id: undefined, // 确保清除ID，否则会被认为是更新操作
   })
   //清空照片
   imgList.value = []
@@ -366,6 +367,12 @@ const initAddSpu = async (c3Id: number | string) => {
   AllTradeMark.value = result.data
   allSaleAttr.value = result1.data
 }
+
+//删除SPU销售属性
+const deleteSaleAttr = (baseSaleAttrId: string) => {
+  saleAttr.value = saleAttr.value.filter((item) => item.baseSaleAttrId !== baseSaleAttrId)
+}
+
 //对外暴露
 defineExpose({ initHasSpuData, initAddSpu })
 </script>

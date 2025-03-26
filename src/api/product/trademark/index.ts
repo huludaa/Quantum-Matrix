@@ -2,13 +2,13 @@ import request from '@/utils/request'
 import type { TradeMark, TradeMarkResponseData } from './type'
 enum API {
   //获取已有品牌接口
-  TRADEMARK_URL = '/admin/product/baseTrademark/',
+  TRADEMARK_URL = '/product/baseTrademark/',
   //添加品牌
-  ADDTRADEMARK_URL = '/admin/product/baseTrademark/save',
+  ADDTRADEMARK_URL = '/product/baseTrademark/save',
   //修改已有品牌
-  UPDATETRADEMARK_URL = '/admin/product/baseTrademark/update',
+  UPDATETRADEMARK_URL = '/product/baseTrademark/update',
   //删除已有品牌
-  DELETE_URL = '/admin/product/baseTrademark/remove/',
+  DELETE_URL = '/product/baseTrademark/remove/',
 }
 //获取已有品牌的接口方法
 export const reqHasTrademark = (page: number, limit: number) =>

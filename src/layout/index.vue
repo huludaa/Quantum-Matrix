@@ -1,16 +1,20 @@
 <template>
   <div class="layout_contain">
-    <div class="layout_slider">
+    <div
+      class="layout_slider"
+      :style="{
+        width: LayOutSettingStore.fold ? '64px' : '260px', // 动态调整宽度
+        transition: 'all 0.3s', // 添加过渡效果
+      }"
+    >
       <logo />
       <el-scrollbar class="scrollbar">
         <el-menu
           :default-active="route.path"
-          text-color="skyblue"
-          active-text-color="yellow"
+          text-color="rgb(221, 179, 100)"
+          active-text-color="skyblue"
           :collapse="LayOutSettingStore.fold ? true : false"
-          background-color="$base-menu-background"
         >
-          <!-- TODO: collapse悬浮窗口背景颜色怎么修改 -->
           <Menu :menuList="userStore.menuRoutes"></Menu>
         </el-menu>
       </el-scrollbar>
@@ -31,6 +35,7 @@ import useUserStore from '@/store/module/user'
 import Main from './main/index.vue'
 import { useRoute } from 'vue-router'
 import useLayOutSettingStore from '@/store/module/setting'
+
 let LayOutSettingStore = useLayOutSettingStore()
 let userStore = useUserStore()
 let route = useRoute()
@@ -41,16 +46,24 @@ let route = useRoute()
   height: 100vh;
 
   .layout_slider {
-    background-color: $base-menu-background;
     color: white; //logo旁边的文字
     height: 100vh;
-    width: $base-menu-width;
-    transition: all 0.2s;
+    width: 60px;
+    transition: all 0.3s;
+    background-color: $base-menu-background;
     .scrollbar {
       width: 100%;
       height: calc(100vh - $base-menu-logo-height);
       .el-menu {
         border-right: none;
+        background-color: $base-menu-background;
+      }
+      .el-menu-item:hover {
+        background-color: rgb(91, 111, 119) !important;
+      }
+      // 有子菜单的菜单项悬停
+      .el-sub-menu__title:hover {
+        background-color: rgb(91, 111, 119) !important;
       }
     }
   }
@@ -75,7 +88,7 @@ let route = useRoute()
     height: calc(100vh - $base-tabbar-height);
     width: calc(100% - $base-menu-width);
     overflow: scroll;
-    transition: all 0.2s;
+    transition: all 0.3s;
     &.fold {
       width: calc(100vw - $base-menu-logo-height);
       left: $base-menu-logo-height;

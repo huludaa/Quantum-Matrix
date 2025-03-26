@@ -22,8 +22,8 @@ export interface SkuData {
   price?: string | number //sku价格
   weight?: string | number //sku重量
   skuDesc?: string //sku的描述
-  skuAttrValueList?: Attr[]
-  skuSaleAttrValueList?: saleArr[]
+  skuAttrValueList?: Attr[] //平台属性
+  skuSaleAttrValueList?: saleArr[] //销售属性
   skuDefaultImg?: string //sku图片地址
   isSale?: number //控制商品的上架与下架
   id?: number

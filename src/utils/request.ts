@@ -14,6 +14,7 @@ request.interceptors.request.use(
   //config配置对象，headers属性请求头，经常给服务器端携带公共参数
   (config) => {
     const userStore = useUserStore()
+
     if (userStore.token) {
       config.headers.token = userStore.token
     }

@@ -1,4 +1,3 @@
-import request from '@/utils/request'
 import { defineStore } from 'pinia'
 import { reqC1, reqC2, reqC3 } from '@/api/product/attr'
 import type { CateogoryResponseData } from '@/api/product/attr/type'

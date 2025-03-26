@@ -31,7 +31,7 @@
   </el-popover>
   <img
     :src="userStore.avatar"
-    style="width: 30px; height: 30px; margin: 0 10px; border-radius: 50%"
+    style="width: 50px; height: 50px; margin: 0 5px; border-radius: 50%"
   />
   <el-dropdown>
     <span class="el-dropdown-link">

@@ -61,6 +61,7 @@ defineProps(['scene'])
 onMounted(() => {
   getC1()
 })
+
 //通知仓库获取一级分类的方法
 const getC1 = () => {
   //通知分类仓库发请求获取一级分类的数据

@@ -38,5 +38,4 @@ watch(
   opacity: 1;
   transform: scale(1); /* 最终状态 */
 }
-/* TODO: 根据路由元信息动态调整过渡时间 */
 </style>

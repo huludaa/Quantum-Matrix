@@ -21,17 +21,18 @@ router.beforeEach(async (to, from, next) => {
   // 开始进度条
   nprogress.start()
   const userStore = useUserStore(pinia)
-
   // 从用户状态中获取 token，用于判断用户是否登录
   const token = userStore.token
   let username = userStore.username
+  // console.log(userStore)
+
   // 如果用户已登录（token 存在）
   if (token) {
     // 如果用户尝试访问登录页，则重定向到首页
     if (to.path == '/login') {
       next({ path: '/' })
     } else {
-      username = ''
+      // username = ''
       if (username) {
         next()
       } else {
@@ -58,11 +59,9 @@ router.beforeEach(async (to, from, next) => {
       next({ path: '/login', query: { redirect: to.path } })
     }
   }
-
   // 注意：这里不需要再调用 next()，因为上面的逻辑已经调用了
   // 重复调用 next() 可能会导致路由跳转异常
 })
-
 /**
  * 全局后置路由守卫
  * 在每次路由跳转完成后执行，用于关闭进度条

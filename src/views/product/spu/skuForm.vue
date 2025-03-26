@@ -15,7 +15,7 @@
     <el-form-item label="平台属性">
       <el-form :inline="true">
         <el-form-item v-for="(item, index) in attrArr" :key="item.id" :label="item.attrName">
-          <el-select v-model="item.attrIdAndValueId">
+          <el-select v-model="item.attrIdAndValueId" style="width: 120px">
             <el-option
               :value="`${item.id}:${attrValue.id}`"
               v-for="(attrValue, index) in item.attrValueList"
@@ -29,8 +29,9 @@
     <el-form-item label="销售属性">
       <el-form :inline="true">
         <el-form-item :label="item.saleAttrName" v-for="(item, index) in saleArr" :key="item.id">
-          <el-select v-model="item.saleIdAndValueId">
+          <el-select v-model="item.saleIdAndValueId" style="width: 120px">
             <el-option
+              size="90"
               :value="`${item.id}:${saleAttrValue.id}`"
               v-for="(saleAttrValue, index) in item.spuSaleAttrValueList"
               :key="saleAttrValue.id"
@@ -69,7 +70,7 @@ import { reqAttr } from '@/api/product/attr'
 import { reqSpuImageList, reqSpuHasSaleAttr, reqAddSku } from '@/api/product/spu'
 import type { SkuData } from '@/api/product/spu/type'
 import { ElMessage } from 'element-plus'
-import { ref, reactive } from 'vue'
+import { ref, reactive, nextTick } from 'vue'
 //平台属性
 let attrArr = ref<any>([])
 //销售属性
@@ -100,6 +101,9 @@ let skuParams = reactive<SkuData>({
 })
 //当前子组件的方法对外暴露
 const initSkuData = async (c1Id: number | string, c2Id: number | string, spu: any) => {
+  //重置sku表单信息
+  resetSkuForm()
+
   //收集数据
   skuParams.category3Id = spu.category3Id
   skuParams.spuId = spu.id
@@ -117,6 +121,31 @@ const initSkuData = async (c1Id: number | string, c2Id: number | string, spu: an
   //图片
   imgArr.value = result2.data
 }
+
+//重置sku表单信息
+const resetSkuForm = async () => {
+  const { category3Id, spuId, tmId } = skuParams
+  // 重置基本表单数据
+  Object.assign(skuParams, {
+    category3Id: '',
+    spuId: '',
+    tmId: '',
+    skuName: '',
+    price: '',
+    weight: '',
+    skuDesc: '',
+    skuDefaultImg: '',
+    skuAttrValueList: [],
+    skuSaleAttrValueList: [],
+  })
+
+  skuParams.category3Id = category3Id
+  skuParams.spuId = spuId
+  skuParams.tmId = tmId
+  // 确保DOM更新
+  await nextTick()
+}
+
 //取消按钮的回调
 const cancel = () => {
   $emit('changeScene', { flag: 0, params: '' })
@@ -145,24 +174,46 @@ const save = async () => {
   skuParams.skuAttrValueList = attrArr.value.reduce((prev: any, next: any) => {
     if (next.attrIdAndValueId) {
       let [attrId, valueId] = next.attrIdAndValueId.split(':')
-      prev.push({
-        attrId,
-        valueId,
-      })
+      // 查找对应的属性名称和值名称
+      const attr = attrArr.value.find((item: any) => item.id === parseInt(attrId))
+      if (attr) {
+        const attrValue = attr.attrValueList.find((item: any) => item.id === parseInt(valueId))
+        if (attrValue) {
+          prev.push({
+            attrId,
+            valueId,
+            attrName: attr.attrName,
+            valueName: attrValue.valueName,
+          })
+        }
+      }
     }
     return prev
   }, [])
+
   //销售属性
   skuParams.skuSaleAttrValueList = saleArr.value.reduce((prev: any, next: any) => {
     if (next.saleIdAndValueId) {
       let [saleAttrId, saleAttrValueId] = next.saleIdAndValueId.split(':')
-      prev.push({
-        saleAttrId,
-        saleAttrValueId,
-      })
+      // 查找对应的销售属性名称和值名称
+      const saleAttr = saleArr.value.find((item: any) => item.id === parseInt(saleAttrId))
+      if (saleAttr) {
+        const saleAttrValue = saleAttr.spuSaleAttrValueList.find(
+          (item: any) => item.id === parseInt(saleAttrValueId),
+        )
+        if (saleAttrValue) {
+          prev.push({
+            saleAttrId,
+            saleAttrValueId,
+            saleAttrName: saleAttr.saleAttrName,
+            saleAttrValueName: saleAttrValue.saleAttrValueName,
+          })
+        }
+      }
     }
     return prev
   }, [])
+
   //添加SKU的请求
   let result: any = await reqAddSku(skuParams)
   if (result.code == 200) {

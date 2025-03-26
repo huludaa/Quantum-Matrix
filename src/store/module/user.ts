@@ -33,6 +33,7 @@ const useUserStore = defineStore('User', {
     //用户登录的方法
     async userLogin(data: loginFormData) {
       let result: loginResponseData = await reqLogin(data)
+      console.log(13242)
       if (result.code === 200) {
         this.token = result.data
         localStorage.setItem('TOKEN', result.data) //本地存储一份token，防止更新时不见了
@@ -41,7 +42,7 @@ const useUserStore = defineStore('User', {
         return Promise.reject(new Error(result.message))
       }
     },
-    //获取用户信息方法
+    // 获取用户信息方法
     async userInfo() {
       let result: any = await reqUserInfo()
       if (result.code == 200) {
@@ -49,21 +50,25 @@ const useUserStore = defineStore('User', {
         this.avatar = result.data.avatar
         this.buttons = result.data.buttons
         //计算当前用户需要展示的异步路由,cloneDeep处理切换用户时的菜单错误
-        const userAsyncRoute = filterAsyncRoute(cloneDeep(anyRoute), result.data.routes)
+        const userAsyncRoute = filterAsyncRoute(cloneDeep(asyncRoute), result.data.routes)
         // 菜单需要的数据
-        this.menuRoutes = [...constantRoute, ...userAsyncRoute, anyRoute]
-        //动态追加异步路由，任意路由
-        ;[...userAsyncRoute, anyRoute].forEach((route: any) => {
+
+        this.menuRoutes = [...constantRoute, ...userAsyncRoute]
+        //动态追加异步路由
+        ;[...userAsyncRoute].forEach((route: any) => {
           router.addRoute(route)
         })
+        // 在路由初始化时添加 anyRoute
+        router.addRoute(anyRoute[0])
+
         return 'ok'
       } else {
         return Promise.reject(new Error(result.message))
       }
     },
-    //用户退出方法
+    // 用户退出方法
     async userLogout() {
-      let result = await reqUserInfo()
+      let result = await reqLogout()
       if (result.code == 200) {
         this.username = ''
         this.avatar = ''

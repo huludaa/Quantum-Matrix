@@ -60,7 +60,7 @@
       <el-form-item label="品牌LOGO" label-width="100px" prop="logoUrl">
         <el-upload
           class="avatar-uploader"
-          action="/api/admin/product/fileUpload"
+          action="/api/product/fileUpload"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
@@ -70,7 +70,6 @@
         </el-upload>
       </el-form-item>
     </el-form>
-    <!-- 具名插槽 ,放置按钮-->
     <template #footer>
       <el-button type="primary" size="default" @click="cancel">取消</el-button>
       <el-button type="primary" size="default" @click="confirm">确定</el-button>
@@ -216,7 +215,6 @@ const rules = {
 }
 
 //删除品牌确认
-//TODO:删除失败，需要再次测试，可能原因服务器
 const removeTrademark = async (id: number) => {
   const result = await reqDeleteTrademark(id)
   if (result.code == 200) {

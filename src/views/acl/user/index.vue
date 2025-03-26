@@ -263,8 +263,8 @@ const save = async () => {
     //获取最新的全部账号的信息
     getHasUser(userParams.id ? pageNO.value : 1)
     console.log(userParams)
-    //浏览器自动刷新一次
-    window.location.reload()
+    //浏览器自动刷新一次，换成真实接口后开启
+    // window.location.reload()
   } else {
     //关闭抽屉
     drawer.value = false
@@ -274,12 +274,12 @@ const save = async () => {
 }
 //校验的回调函数
 const validatorUsername = (rule: any, value: any, callBack: any) => {
-  if (value.trim().length >= 6) callBack()
-  callBack(new Error('用户姓名至少六位'))
+  if (value.trim().length >= 1) callBack()
+  callBack(new Error('用户姓名至少两位'))
 }
 const validatorName = (rule: any, value: any, callBack: any) => {
-  if (value.trim().length >= 6) callBack()
-  callBack(new Error('用户昵称至少六位'))
+  if (value.trim().length >= 0) callBack()
+  callBack(new Error('请输入用户昵称'))
 }
 const validatorPassword = (rule: any, value: any, callBack: any) => {
   if (value.trim().length >= 6) callBack()
@@ -298,6 +298,7 @@ const setRole = async (row: User) => {
   Object.assign(userParams, row)
   //获取全部职位的数据与当前用户已有的职位
   let result: AllRoleResponseData = await reqAllRole(userParams.id as number)
+  console.log(result)
 
   if (result.code == 200) {
     //存储全部职位
@@ -360,9 +361,10 @@ const deleteSelectUser = async () => {
   let idsList: any = selectIdArr.value.map((item) => {
     return item.id
   })
-
   //批量删除的请求
   let result: any = await reqSelectUser(idsList)
+  console.log('result', result)
+
   if (result.code == 200) {
     ElMessage({ type: 'success', message: '删除成功' })
     getHasUser(userArr.value.length > 1 ? pageNO.value : pageNO.value - 1)

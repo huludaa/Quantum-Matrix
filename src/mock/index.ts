@@ -1,0 +1,8 @@
+import './user'
+import './acluser'
+import './attr'
+import './menu'
+import './roler'
+import './spu'
+import './trademark'
+import './sku'

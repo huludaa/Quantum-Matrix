@@ -3,11 +3,6 @@ import { createApp } from 'vue'
 import App from './App.vue'
 const app = createApp(App)
 
-// 导入 createPinia 函数
-import { createPinia } from 'pinia'
-// 安装 Pinia 状态管理库,createPinia 创建 Pinia 实例
-app.use(createPinia())
-
 //获取element-plus插件与样式
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
@@ -30,17 +25,7 @@ app.use(globalComponent)
 //引入模板的全局样式
 import './styles/index.scss'
 
-//测试mock假接口是否能用
-import axios from 'axios'
-//登录接口
-axios({
-  url: '/api/user/login', //请求地址
-  method: 'post', //请求方式
-  data: {
-    username: 'system',
-    password: '111111',
-  },
-})
+import '@/mock/index' // 确保 MockJS 配置文件被加载
 //暗黑模式需要的样式
 import 'element-plus/theme-chalk/dark/css-vars.css'
 import router from './router'
