@@ -57,14 +57,14 @@
 <script setup lang="ts">
 import { ref, onMounted, reactive } from 'vue'
 //引入获取菜单请求API
-import { reqAllPermisstion, reqAddOrUpdateMenu, reqRemoveMenu } from '@/api/acl/menu'
+import { reqAllPermisstion, reqAddOrUpdateMenu, reqRemoveMenu } from '@/api/acl/permission'
 //引入ts类型
 import type {
   MenuParams,
   PermisstionResponseData,
   PermisstionList,
   Permisstion,
-} from '@/api/acl/menu/type'
+} from '@/api/acl/permission/type'
 import { ElMessage } from 'element-plus'
 //存储菜单的数据
 let PermisstionArr = ref<PermisstionList>([])
@@ -141,3 +141,4 @@ const removeMenu = async (id: number) => {
 </script>
 
 <style scoped></style>
+@/api/acl/permission@/api/acl/permission/type

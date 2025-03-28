@@ -9,8 +9,10 @@ import router from '@/router'
 import cloneDeep from 'loadsh/cloneDeep'
 //用于过滤当前用户需要展示的异步路由
 function filterAsyncRoute(asyncRoute: any, routes: any) {
+  //递归检查路由的name是否在用户路由权限列表routes中
   return asyncRoute.filter((item: any) => {
     if (routes.includes(item.name)) {
+      //检查是否有子路由，并判断其子路由是否在用户路由权限列表routes中
       if (item.children && item.children.length > 0) {
         item.children = filterAsyncRoute(item.children, routes)
       }
@@ -21,11 +23,11 @@ function filterAsyncRoute(asyncRoute: any, routes: any) {
 const useUserStore = defineStore('User', {
   state: () => {
     return {
-      token: localStorage.getItem('TOKEN'), //用户的唯一标识
+      token: localStorage.getItem('TOKEN'), //用户的唯一标识，从本地存储读取token
       menuRoutes: constantRoute, //菜单模块显示的路由
-      username: '',
-      avatar: '',
-      // 存储当前用户是否包含某一个按钮
+      username: '', //用户名
+      avatar: '', //用户头像
+      // 按钮权限列表
       buttons: [],
     }
   },
@@ -33,7 +35,6 @@ const useUserStore = defineStore('User', {
     //用户登录的方法
     async userLogin(data: loginFormData) {
       let result: loginResponseData = await reqLogin(data)
-      console.log(13242)
       if (result.code === 200) {
         this.token = result.data
         localStorage.setItem('TOKEN', result.data) //本地存储一份token，防止更新时不见了
@@ -46,19 +47,19 @@ const useUserStore = defineStore('User', {
     async userInfo() {
       let result: any = await reqUserInfo()
       if (result.code == 200) {
+        //存储用户基本信息
         this.username = result.data.name
         this.avatar = result.data.avatar
         this.buttons = result.data.buttons
-        //计算当前用户需要展示的异步路由,cloneDeep处理切换用户时的菜单错误
+        //计算当前用户需要展示的异步路由。cloneDeep深拷贝，避免直接修改原对象
         const userAsyncRoute = filterAsyncRoute(cloneDeep(asyncRoute), result.data.routes)
-        // 菜单需要的数据
-
+        // 菜单需要的数据：常量路由+过滤后的异步路由
         this.menuRoutes = [...constantRoute, ...userAsyncRoute]
-        //动态追加异步路由
+        //动态追加异步路由到vue router
         ;[...userAsyncRoute].forEach((route: any) => {
           router.addRoute(route)
         })
-        // 在路由初始化时添加 anyRoute
+        // 在路由初始化时添加 anyRoute,任意路由兜底
         router.addRoute(anyRoute[0])
 
         return 'ok'
@@ -70,6 +71,7 @@ const useUserStore = defineStore('User', {
     async userLogout() {
       let result = await reqLogout()
       if (result.code == 200) {
+        // 清空状态
         this.username = ''
         this.avatar = ''
         this.token = ''

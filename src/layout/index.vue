@@ -12,7 +12,7 @@
         <el-menu
           :default-active="route.path"
           text-color="rgb(221, 179, 100)"
-          active-text-color="skyblue"
+          active-text-color="#228be6"
           :collapse="LayOutSettingStore.fold ? true : false"
         >
           <Menu :menuList="userStore.menuRoutes"></Menu>

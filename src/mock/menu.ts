@@ -1,7 +1,7 @@
 // src/api/mock/menu.ts
 import Mock from 'mockjs'
 import dayjs from 'dayjs'
-import type { Permisstion, PermisstionList, MenuParams } from '@/api/acl/menu/type'
+import type { Permisstion, PermisstionList, MenuParams } from '@/api/acl/permission/type'
 
 // 初始模拟数据
 let mockMenuList: PermisstionList = [
