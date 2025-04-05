@@ -79,7 +79,7 @@
               style="margin: 0px 5px"
               @close="row.spuSaleAttrValueList.splice(index, 1)"
               v-for="(item, index) in row.spuSaleAttrValueList"
-              :key="row.id"
+              :key="item.id"
               class="mx-1"
               closable
             >
