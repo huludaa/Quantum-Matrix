@@ -1,5 +1,4 @@
 import Mock from 'mockjs'
-import { ref } from 'vue'
 
 // 模拟的 SKU 数据
 const mockSkuList = [
@@ -11,7 +10,7 @@ const mockSkuList = [
     tmId: 1,
     skuName: 'Apple iPhone 13 黑色 128GB',
     price: 5999,
-    weight: '173g',
+    weight: 173,
     skuDesc: 'iPhone 13 黑色 128GB 版本',
     skuDefaultImg: 'https://picsum.photos/100/100',
     isSale: 1,
@@ -60,6 +59,26 @@ const mockSkuList = [
         skuId: 101,
       },
     ],
+    skuImageList: [
+      {
+        id: 101,
+        imgName: 'Apple iPhone 13-1',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 101,
+      },
+      {
+        id: 102,
+        imgName: 'Apple iPhone 13-2',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 101,
+      },
+      {
+        id: 103,
+        imgName: 'Apple iPhone 13-3',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 101,
+      },
+    ],
   },
   {
     id: 102,
@@ -68,7 +87,7 @@ const mockSkuList = [
     tmId: 2,
     skuName: '华为P50 Pro 白色 256GB',
     price: 5488,
-    weight: '195g',
+    weight: 195,
     skuDesc: '华为旗舰手机 徕卡影像',
     skuDefaultImg: 'https://picsum.photos/100/100',
     isSale: 1,
@@ -106,6 +125,26 @@ const mockSkuList = [
         skuId: 102,
       },
     ],
+    skuImageList: [
+      {
+        id: 102,
+        imgName: '华为P50 Pro-1',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 102,
+      },
+      {
+        id: 103,
+        imgName: '华为P50 Pro-2',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 102,
+      },
+      {
+        id: 104,
+        imgName: '华为P50 Pro-3',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 102,
+      },
+    ],
   },
 
   // -------------------- category3Id: 2 (平板电脑) --------------------
@@ -116,7 +155,7 @@ const mockSkuList = [
     tmId: 1,
     skuName: 'iPad Pro 11寸 深空灰 128GB',
     price: 6799,
-    weight: '466g',
+    weight: 466,
     skuDesc: 'M1芯片 120Hz刷新率',
     skuDefaultImg: 'https://picsum.photos/100/100',
     isSale: 1,
@@ -154,6 +193,26 @@ const mockSkuList = [
         skuId: 201,
       },
     ],
+    skuImageList: [
+      {
+        id: 201,
+        imgName: 'iPad Pro 11寸-1',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 201,
+      },
+      {
+        id: 202,
+        imgName: 'iPad Pro 11寸-2',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 201,
+      },
+      {
+        id: 203,
+        imgName: 'iPad Pro 11寸-3',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 201,
+      },
+    ],
   },
   {
     id: 202,
@@ -162,7 +221,7 @@ const mockSkuList = [
     tmId: 3,
     skuName: '小米平板5 Pro 白色 256GB',
     price: 2799,
-    weight: '515g',
+    weight: 515,
     skuDesc: '2.5K 120Hz高刷屏',
     skuDefaultImg: 'https://picsum.photos/100/100',
     isSale: 1,
@@ -200,6 +259,26 @@ const mockSkuList = [
         skuId: 202,
       },
     ],
+    skuImageList: [
+      {
+        id: 202,
+        imgName: '小米平板5 Pro-1',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 202,
+      },
+      {
+        id: 203,
+        imgName: '小米平板5 Pro-2',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 202,
+      },
+      {
+        id: 204,
+        imgName: '小米平板5 Pro-3',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 202,
+      },
+    ],
   },
 
   // -------------------- category3Id: 3 (男士T恤) --------------------
@@ -210,7 +289,7 @@ const mockSkuList = [
     tmId: 4,
     skuName: '耐克纯棉T恤 黑色 XL',
     price: 199,
-    weight: '250g',
+    weight: 250,
     skuDesc: '100%纯棉 透气舒适',
     skuDefaultImg: 'https://picsum.photos/100/100',
     isSale: 1,
@@ -248,6 +327,26 @@ const mockSkuList = [
         skuId: 301,
       },
     ],
+    skuImageList: [
+      {
+        id: 301,
+        imgName: '耐克纯棉T恤-1',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 301,
+      },
+      {
+        id: 302,
+        imgName: '耐克纯棉T恤-2',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 301,
+      },
+      {
+        id: 303,
+        imgName: '耐克纯棉T恤-3',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 301,
+      },
+    ],
   },
   {
     id: 302,
@@ -256,7 +355,7 @@ const mockSkuList = [
     tmId: 5,
     skuName: '阿迪达斯运动T恤 白色 L',
     price: 229,
-    weight: '230g',
+    weight: 230,
     skuDesc: 'Climalite技术 速干面料',
     skuDefaultImg: 'https://picsum.photos/100/100',
     isSale: 1,
@@ -294,6 +393,26 @@ const mockSkuList = [
         skuId: 302,
       },
     ],
+    skuImageList: [
+      {
+        id: 302,
+        imgName: '阿迪达斯运动T恤-1',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 302,
+      },
+      {
+        id: 303,
+        imgName: '阿迪达斯运动T恤-2',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 302,
+      },
+      {
+        id: 304,
+        imgName: '阿迪达斯运动T恤-3',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 302,
+      },
+    ],
   },
 
   // -------------------- category3Id: 4 (女士裙子) --------------------
@@ -304,7 +423,7 @@ const mockSkuList = [
     tmId: 6,
     skuName: 'ZARA碎花连衣裙 S码',
     price: 399,
-    weight: '350g',
+    weight: 350,
     skuDesc: '雪纺面料 夏季新款',
     skuDefaultImg: 'https://picsum.photos/100/100',
     isSale: 1,
@@ -342,6 +461,26 @@ const mockSkuList = [
         skuId: 401,
       },
     ],
+    skuImageList: [
+      {
+        id: 401,
+        imgName: 'ZARA碎花连衣裙-1',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 401,
+      },
+      {
+        id: 402,
+        imgName: 'ZARA碎花连衣裙-2',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 401,
+      },
+      {
+        id: 403,
+        imgName: 'ZARA碎花连衣裙-3',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 401,
+      },
+    ],
   },
   {
     id: 402,
@@ -350,7 +489,7 @@ const mockSkuList = [
     tmId: 7,
     skuName: 'UR纯色半身裙 M码',
     price: 259,
-    weight: '280g',
+    weight: 280,
     skuDesc: '高腰设计 A字版型',
     skuDefaultImg: 'https://picsum.photos/100/100',
     isSale: 1,
@@ -385,6 +524,26 @@ const mockSkuList = [
         saleAttrName: '尺码',
         saleAttrValueId: 604,
         saleAttrValueName: 'M',
+        skuId: 402,
+      },
+    ],
+    skuImageList: [
+      {
+        id: 402,
+        imgName: 'UR纯色半身裙-1',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 402,
+      },
+      {
+        id: 403,
+        imgName: 'UR纯色半身裙-2',
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: 402,
+      },
+      {
+        id: 404,
+        imgName: 'UR纯色半身裙-3',
+        imgUrl: 'https://picsum.photos/100/100',
         skuId: 402,
       },
     ],
@@ -488,6 +647,30 @@ Mock.mock(/\/api\/product\/getSkuInfo\/\d+/, 'get', (options) => {
   const skuId = parseInt(matches[0])
   const sku = mockSkuList.find((item) => item.id === skuId)
 
+  // 添加 skuImageList 字段
+  if (sku) {
+    sku.skuImageList = [
+      {
+        id: skuId * 10 + 1,
+        imgName: `${sku.skuName}-1`,
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: skuId,
+      },
+      {
+        id: skuId * 10 + 2,
+        imgName: `${sku.skuName}-2`,
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: skuId,
+      },
+      {
+        id: skuId * 10 + 3,
+        imgName: `${sku.skuName}-3`,
+        imgUrl: 'https://picsum.photos/100/100',
+        skuId: skuId,
+      },
+    ]
+  }
+
   return Mock.mock({
     code: 200,
     message: '成功',
@@ -516,6 +699,21 @@ Mock.mock(/\/api\/product\/deleteSku\/\d+/, 'delete', (options) => {
   return Mock.mock({
     code: 200,
     message: '成功',
+    ok: true,
+  })
+})
+
+// 模拟更新 SKU 接口
+Mock.mock('/api/product/updateSku', 'put', (options) => {
+  const data = JSON.parse(options.body)
+  const index = mockSkuList.findIndex((item) => item.id === data.id)
+
+  // 更新 SKU 数据
+  mockSkuList[index] = { ...mockSkuList[index], ...data }
+
+  return Mock.mock({
+    code: 200,
+    message: '更新成功',
     ok: true,
   })
 })

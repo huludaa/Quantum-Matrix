@@ -1,5 +1,5 @@
 export default {
-  title: '量子智控制运营平台',
+  title: '企管通后台管理平台',
   logo: '/public/logo.png',
   logoHidden: true,
 }

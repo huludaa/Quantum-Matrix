@@ -5,7 +5,7 @@ import { ElMessage } from 'element-plus'
 import useUserStore from '@/store/module/user'
 
 //第一步：利用axios对象的create方法，去创建axios实例（其他的配置：基础路径、超时的时间）
-let request = axios.create({
+const request = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
   timeout: 10000,
 })

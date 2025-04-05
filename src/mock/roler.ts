@@ -1,7 +1,7 @@
 import Mock from 'mockjs'
 import dayjs from 'dayjs'
 // 模拟的职位数据
-let mockRoleList = [
+const mockRoleList = [
   {
     id: 1,
     createTime: '2025-01-01 00:00:00',
@@ -19,7 +19,7 @@ let mockRoleList = [
 ]
 
 // 模拟的菜单权限数据
-let mockMenuList = [
+const mockMenuList = [
   {
     id: 1,
     createTime: '2025-01-01 00:00:00',
@@ -39,6 +39,19 @@ let mockMenuList = [
         pid: 1,
         name: '用户管理',
         code: 'user',
+        toCode: '',
+        type: 1,
+        status: null,
+        level: 2,
+        select: false,
+      },
+      {
+        id: 3,
+        createTime: '2025-01-01 00:00:00',
+        updateTime: '2025-01-01 00:00:00',
+        pid: 1,
+        name: '商品管理',
+        code: 'goods',
         toCode: '',
         type: 1,
         status: null,

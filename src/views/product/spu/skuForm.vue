@@ -14,11 +14,11 @@
     </el-form-item>
     <el-form-item label="平台属性">
       <el-form :inline="true">
-        <el-form-item v-for="(item, index) in attrArr" :key="item.id" :label="item.attrName">
+        <el-form-item v-for="item in attrArr" :key="item.id" :label="item.attrName">
           <el-select v-model="item.attrIdAndValueId" style="width: 120px">
             <el-option
               :value="`${item.id}:${attrValue.id}`"
-              v-for="(attrValue, index) in item.attrValueList"
+              v-for="attrValue in item.attrValueList"
               :key="attrValue.id"
               :label="attrValue.valueName"
             ></el-option>
@@ -28,12 +28,12 @@
     </el-form-item>
     <el-form-item label="销售属性">
       <el-form :inline="true">
-        <el-form-item :label="item.saleAttrName" v-for="(item, index) in saleArr" :key="item.id">
+        <el-form-item :label="item.saleAttrName" v-for="item in saleArr" :key="item.id">
           <el-select v-model="item.saleIdAndValueId" style="width: 120px">
             <el-option
               size="90"
               :value="`${item.id}:${saleAttrValue.id}`"
-              v-for="(saleAttrValue, index) in item.spuSaleAttrValueList"
+              v-for="saleAttrValue in item.spuSaleAttrValueList"
               :key="saleAttrValue.id"
               :label="saleAttrValue.saleAttrValueName"
             ></el-option>
@@ -45,13 +45,13 @@
       <el-table border :data="imgArr" ref="table">
         <el-table-column type="selection" width="80px" align="center"></el-table-column>
         <el-table-column label="图片">
-          <template #="{ row, $index }">
+          <template #="{ row }">
             <img :src="row.imgUrl" alt="" style="width: 100px; height: 100px" />
           </template>
         </el-table-column>
         <el-table-column label="名称" prop="imgName"></el-table-column>
         <el-table-column label="操作">
-          <template #="{ row, $index }">
+          <template #="{ row }">
             <el-button type="primary" size="small" @click="handler(row)">设置默认</el-button>
           </template>
         </el-table-column>
@@ -72,15 +72,15 @@ import type { SkuData } from '@/api/product/spu/type'
 import { ElMessage } from 'element-plus'
 import { ref, reactive, nextTick } from 'vue'
 //平台属性
-let attrArr = ref<any>([])
+const attrArr = ref<any>([])
 //销售属性
-let saleArr = ref<any>([])
+const saleArr = ref<any>([])
 //照片的数据
-let imgArr = ref<any>([])
+const imgArr = ref<any>([])
 //获取table组件实例
-let table = ref<any>()
+const table = ref<any>()
 //收集SKU的参数
-let skuParams = reactive<SkuData>({
+const skuParams = reactive<SkuData>({
   //父组件传递过来的数据
   category3Id: '', //三级分类的ID
   spuId: '', //已有的SPU的ID
@@ -109,11 +109,11 @@ const initSkuData = async (c1Id: number | string, c2Id: number | string, spu: an
   skuParams.spuId = spu.id
   skuParams.tmId = spu.tmId
   //获取平台属性
-  let result: any = await reqAttr(c1Id, c2Id, spu.category3Id)
+  const result: any = await reqAttr(c1Id, c2Id, spu.category3Id)
   //获取对应的销售属性
-  let result1: any = await reqSpuHasSaleAttr(spu.id)
+  const result1: any = await reqSpuHasSaleAttr(spu.id)
   //获取照片墙的数据
-  let result2: any = await reqSpuImageList(spu.id)
+  const result2: any = await reqSpuImageList(spu.id)
   //平台属性
   attrArr.value = result.data
   //销售属性
@@ -153,13 +153,13 @@ const cancel = () => {
 
 //设置默认图片的方法回调
 const handler = (row: any) => {
-  //点击的时候,全部图片的的复选框不勾选
+  //先把所有图片都取消选中
   imgArr.value.forEach((item: any) => {
     table.value.toggleRowSelection(item, false)
   })
-  //选中的图片才勾选
+  //只选中当前点击的图片
   table.value.toggleRowSelection(row, true)
-  //收集图片地址
+  //保存选中的图片地址
   skuParams.skuDefaultImg = row.imgUrl
 }
 //对外暴露方法
@@ -169,11 +169,13 @@ defineExpose({
 
 //保存按钮的方法
 const save = async () => {
-  //整理参数
-  //平台属性
+  //整理平台属性
+  /*   reduce 就是把一堆东西"合并"成一个结果
+第一个参数是累加器（之前的结果）
+第二个参数是当前项（正在处理的项目） */
   skuParams.skuAttrValueList = attrArr.value.reduce((prev: any, next: any) => {
     if (next.attrIdAndValueId) {
-      let [attrId, valueId] = next.attrIdAndValueId.split(':')
+      const [attrId, valueId] = next.attrIdAndValueId.split(':')
       // 查找对应的属性名称和值名称
       const attr = attrArr.value.find((item: any) => item.id === parseInt(attrId))
       if (attr) {
@@ -194,7 +196,7 @@ const save = async () => {
   //销售属性
   skuParams.skuSaleAttrValueList = saleArr.value.reduce((prev: any, next: any) => {
     if (next.saleIdAndValueId) {
-      let [saleAttrId, saleAttrValueId] = next.saleIdAndValueId.split(':')
+      const [saleAttrId, saleAttrValueId] = next.saleIdAndValueId.split(':')
       // 查找对应的销售属性名称和值名称
       const saleAttr = saleArr.value.find((item: any) => item.id === parseInt(saleAttrId))
       if (saleAttr) {
@@ -215,7 +217,7 @@ const save = async () => {
   }, [])
 
   //添加SKU的请求
-  let result: any = await reqAddSku(skuParams)
+  const result: any = await reqAddSku(skuParams)
   if (result.code == 200) {
     ElMessage({
       type: 'success',
@@ -231,7 +233,7 @@ const save = async () => {
   }
 }
 //自定义事件的方法
-let $emit = defineEmits(['changeScene'])
+const $emit = defineEmits(['changeScene'])
 </script>
 
 <style scoped></style>

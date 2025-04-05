@@ -36,9 +36,9 @@ import Main from './main/index.vue'
 import { useRoute } from 'vue-router'
 import useLayOutSettingStore from '@/store/module/setting'
 
-let LayOutSettingStore = useLayOutSettingStore()
-let userStore = useUserStore()
-let route = useRoute()
+const LayOutSettingStore = useLayOutSettingStore()
+const userStore = useUserStore()
+const route = useRoute()
 </script>
 <style lang="scss">
 .layout_contain {

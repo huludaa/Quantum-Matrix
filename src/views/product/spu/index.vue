@@ -2,6 +2,7 @@
   <div>
     <!-- 三级分类 -->
     <Category :scene="scene"></Category>
+
     <el-card style="margin: 10px 0px">
       <!-- v-if|v-show:都可以实现显示与隐藏 -->
       <div v-show="scene == 0">
@@ -24,7 +25,7 @@
           ></el-table-column>
           <el-table-column label="SPU操作">
             <!-- row:即为已有的SPU对象 -->
-            <template #="{ row, $index }">
+            <template #="{ row }">
               <el-button
                 type="primary"
                 size="small"
@@ -75,58 +76,14 @@
       <!-- 添加SKU的子组件 -->
       <SkuForm ref="sku" v-show="scene == 2" @changeScene="changeScene"></SkuForm>
       <!-- dialog对话框:展示已有的SKU数据 -->
-      <el-dialog v-model="show" title="SKU列表" width="80%">
+      <el-dialog v-model="show" title="SKU列表">
         <el-table border :data="skuArr">
-          <el-table-column label="SKU名字" prop="skuName" width="120"></el-table-column>
-          <el-table-column label="SKU价格" prop="price" width="100"></el-table-column>
-          <el-table-column label="SKU重量" prop="weight" width="100"></el-table-column>
-          <el-table-column label="SKU描述" width="200">
+          <el-table-column label="SKU名字" prop="skuName"></el-table-column>
+          <el-table-column label="SKU价格" prop="price"></el-table-column>
+          <el-table-column label="SKU重量" prop="weight"></el-table-column>
+          <el-table-column label="SKU图片">
             <template #="{ row }">
-              <el-tooltip :content="row.skuDesc" placement="top" v-if="row.skuDesc">
-                <span class="ellipsis-text">{{ row.skuDesc }}</span>
-              </el-tooltip>
-              <span v-else>-</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="平台属性">
-            <template #="{ row }">
-              <div v-if="row.skuAttrValueList && row.skuAttrValueList.length">
-                <el-tag
-                  v-for="attr in row.skuAttrValueList"
-                  :key="attr.id"
-                  size="small"
-                  style="margin: 2px"
-                >
-                  {{ attr.attrName }}: {{ attr.valueName }}
-                </el-tag>
-              </div>
-              <span v-else>-</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="销售属性" width="200">
-            <template #="{ row }">
-              <div v-if="row.skuSaleAttrValueList && row.skuSaleAttrValueList.length">
-                <el-tag
-                  v-for="saleAttr in row.skuSaleAttrValueList"
-                  :key="saleAttr.id"
-                  size="small"
-                  style="margin: 2px"
-                  type="success"
-                >
-                  {{ saleAttr.saleAttrName }}: {{ saleAttr.saleAttrValueName }}
-                </el-tag>
-              </div>
-              <span v-else>-</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="SKU图片" width="150">
-            <template #="{ row }">
-              <img
-                :src="row.skuDefaultImg"
-                style="width: 100px; height: 100px; object-fit: contain"
-                v-if="row.skuDefaultImg"
-              />
-              <span v-else>-</span>
+              <img :src="row.skuDefaultImg" style="width: 100px; height: 100px" />
             </template>
           </el-table-column>
         </el-table>
@@ -145,24 +102,24 @@ import type { SpuData } from '@/api/product/spu/type'
 import SpuForm from './spuForm.vue'
 import SkuForm from './skuForm.vue'
 import { ElMessage } from 'element-plus'
-let categoryStore = useCategoryStore()
+const categoryStore = useCategoryStore()
 //场景的数据
-let scene = ref<number>(0) //0:显示已有SPU  1:添加或者修改已有SPU 2:添加SKU的结构
+const scene = ref<number>(0) //0:显示已有SPU  1:添加或者修改已有SPU 2:添加SKU的结构
 //分页器默认页码
-let pageNo = ref<number>(1)
+const pageNo = ref<number>(1)
 //每一页展示几条数据
-let pageSize = ref<number>(3)
+const pageSize = ref<number>(3)
 //存储已有的SPU的数据
-let records = ref<Records>([])
+const records = ref<Records>([])
 //存储已有SPU总个数
-let total = ref<number>(0)
+const total = ref<number>(0)
 //获取子组件实例SpuForm
-let spu = ref<any>()
+const spu = ref<any>()
 //获取子组件实例SkuForm
-let sku = ref<any>()
+const sku = ref<any>()
 //存储全部的SKU数据
-let skuArr = ref<SkuData[]>([])
-let show = ref<boolean>(false)
+const skuArr = ref<SkuData[]>([])
+const show = ref<boolean>(false)
 //监听三级分类ID变化
 watch(
   () => categoryStore.c3Id,
@@ -179,7 +136,11 @@ watch(
 const getHasSpu = async (pager = 1) => {
   //修改当前页码
   pageNo.value = pager
-  let result: HasSpuResponseData = await reqHasSpu(pageNo.value, pageSize.value, categoryStore.c3Id)
+  const result: HasSpuResponseData = await reqHasSpu(
+    pageNo.value,
+    pageSize.value,
+    categoryStore.c3Id,
+  )
   if (result.code == 200) {
     records.value = result.data.records
     total.value = result.data.total
@@ -197,7 +158,6 @@ const addSpu = () => {
   //点击添加SPU按钮,调用子组件的方法初始化数据
   spu.value.initAddSpu(categoryStore.c3Id)
 }
-
 //修改已有的SPU的按钮的回调
 const updateSpu = (row: SpuData) => {
   //切换为场景1:添加与修改已有SPU结构->SpuForm
@@ -206,7 +166,7 @@ const updateSpu = (row: SpuData) => {
   spu.value.initHasSpuData(row)
 }
 
-//子组件SpuForm绑定自定义事件:目前是让子组件通知父组件切换场景为0
+//子组件绑定自定义事件
 const changeScene = (obj: any) => {
   //子组件Spuform点击取消变为场景0:展示已有的SPU
   scene.value = obj.flag
@@ -229,7 +189,7 @@ const addSku = (row: SpuData) => {
 
 //查看SKU列表的数据
 const findSku = async (row: SpuData) => {
-  let result: SkuInfoData = await reqSkuList(row.id as number)
+  const result: SkuInfoData = await reqSkuList(row.id as number)
   if (result.code == 200) {
     skuArr.value = result.data
     //对话框显示出来
@@ -239,7 +199,7 @@ const findSku = async (row: SpuData) => {
 
 //删除已有的SPU按钮的回调
 const deleteSpu = async (row: SpuData) => {
-  let result: any = await reqRemoveSpu(row.id as number)
+  const result: any = await reqRemoveSpu(row.id as number)
   if (result.code == 200) {
     ElMessage({
       type: 'success',
@@ -255,23 +215,11 @@ const deleteSpu = async (row: SpuData) => {
   }
 }
 
-//路由组件销毁前，情况仓库关于分类的数据
+//路由组件销毁前，清空仓库关于分类的数据
+// $reset() 方法，是 Pinia store 的内置方法，将 store 的状态重置为初始值，清除所有已修改的状态
 onBeforeUnmount(() => {
   categoryStore.$reset()
 })
 </script>
 
-<style scoped lang="scss">
-.ellipsis-text {
-  display: inline-block;
-  width: 180px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.el-tag {
-  margin-right: 5px;
-  margin-bottom: 5px;
-}
-</style>
+<style scoped></style>

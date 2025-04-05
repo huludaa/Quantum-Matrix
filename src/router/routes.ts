@@ -1,3 +1,10 @@
+/**
+ * 路由配置文件
+ * 包含常量路由和异步路由
+ * 常量路由：所有用户都可以访问的路由
+ * 异步路由：需要根据用户权限动态加载的路由
+ */
+
 // 常量路由
 export const constantRoute = [
   {
@@ -5,8 +12,8 @@ export const constantRoute = [
     path: '/login',
     component: () => import('@/views/login/index.vue'),
     meta: {
-      title: '登录', //标题
-      hidden: true, //隐藏路由标题
+      title: '登录', // 页面标题
+      hidden: true, // 是否在菜单中隐藏
     },
   },
   {

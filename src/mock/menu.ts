@@ -24,6 +24,16 @@ let mockMenuList: PermisstionList = [
         level: 2,
         children: [],
       },
+      {
+        id: 3,
+        createTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        updateTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        pid: 1,
+        name: '商品管理',
+        code: 'sys:goods',
+        level: 2,
+        children: [],
+      },
     ],
   },
 ]

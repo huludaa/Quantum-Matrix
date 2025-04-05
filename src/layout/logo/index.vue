@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import setting from '@/setting'
 import useLayOutSettingStore from '@/store/module/setting'
-let LayOutSettingStore = useLayOutSettingStore()
+const LayOutSettingStore = useLayOutSettingStore()
 </script>
 <style lang="scss">
 .logo {

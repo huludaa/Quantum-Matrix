@@ -1,4 +1,3 @@
-import { fileURLToPath, URL } from 'node:url'
 // loadEnv 是一个用于加载环境变量的工具函数,
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -9,7 +8,7 @@ import { viteMockServe } from 'vite-plugin-mock'
 // https://vite.dev/config/
 export default defineConfig(({ command, mode }) => {
   //获取各种环境下的对应的变量,mode当前运行的环境模式,process.cwd()获取当前项目的根目录index.html
-  let env = loadEnv(mode, process.cwd())
+  const env = loadEnv(mode, process.cwd())
   return {
     plugins: [
       vue(),

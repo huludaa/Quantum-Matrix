@@ -41,7 +41,7 @@
         prop="updateTime"
       ></el-table-column>
       <el-table-column label="操作" align="center" width="280px" show-overflow-tooltip>
-        <template #="{ row, index }">
+        <template #="{ row }">
           <el-button type="primary" size="small" icon="User" @click="setPermisstion(row)"
             >分配权限</el-button
           >
@@ -129,26 +129,26 @@ import type {
   MenuList,
 } from '@/api/acl/roler/type'
 import useLayOutSettingStore from '@/store/module/setting'
-let settingStore = useLayOutSettingStore()
-let pageNo = ref<number>(0)
-let pageSize = ref<number>(3)
-let total = ref<number>(0)
+const settingStore = useLayOutSettingStore()
+const pageNo = ref<number>(0)
+const pageSize = ref<number>(3)
+const total = ref<number>(0)
 //存储所有职位
-let allRole = ref<Records>([])
+const allRole = ref<Records>([])
 //存储搜索关键字
-let keyword = ref<string>('')
+const keyword = ref<string>('')
 //控制对话框的显示与隐藏
-let dialogVisible = ref<boolean>(false)
+const dialogVisible = ref<boolean>(false)
 // 控制抽屉的显示与隐藏
-let drawer = ref<boolean>(false)
+const drawer = ref<boolean>(false)
 //定义数组存储用户权限的数据
-let menuArr = ref<MenuList>([])
+const menuArr = ref<MenuList>([])
 //准备一个数组:数组用于存储勾选的节点的ID(四级的)
-let selectArr = ref<number[]>([])
+const selectArr = ref<number[]>([])
 // 获取树形组件
-let tree = ref<any>()
+const tree = ref<any>()
 // 收集新增岗位数据
-let RoleParams = reactive<RoleData>({
+const RoleParams = reactive<RoleData>({
   roleName: '',
 })
 // 获取ref实例
@@ -158,7 +158,7 @@ onMounted(() => {
 })
 const getHasRole = async (pager = 1) => {
   pageNo.value = pager
-  let result: RoleResponseData = await reqAllRoleList(pageNo.value, pageSize.value, keyword.value)
+  const result: RoleResponseData = await reqAllRoleList(pageNo.value, pageSize.value, keyword.value)
   if (result.code == 200) {
     total.value = result.data.total
     allRole.value = result.data.records
@@ -204,7 +204,7 @@ const rules = {
 }
 const save = async () => {
   await form.value.validate()
-  let result: any = await reqAddOrUpdateRole(RoleParams)
+  const result: any = await reqAddOrUpdateRole(RoleParams)
   if (result.code == 200) {
     dialogVisible.value = false
     //提示文字
@@ -221,26 +221,26 @@ const setPermisstion = async (row: RoleData) => {
   drawer.value = true
   //收集当前要分类权限的职位的数据
   Object.assign(RoleParams, row)
-  let result: MenuResponseData = await reqAllMenuList(RoleParams.id as number)
+  const result: MenuResponseData = await reqAllMenuList(RoleParams.id as number)
 
   if (result.code == 200) {
     menuArr.value = result.data
-    selectArr = filterSelectArr(menuArr.value, [])
+    selectArr.value = filterSelectArr(menuArr.value, [])
   }
 }
 // 过滤出已选中的节点ID
 const filterSelectArr = (allData: any, initArr: any) => {
   // 遍历传入的所有数据（通常是树形结构的菜单或权限数据）
   allData.forEach((item: any) => {
-    // 如果当前节点的 `select` 属性为 true，并且节点的层级（`level`）为 4
+    // 如果当前节点的 select 属性为 true，并且节点的层级（level）为 4
     if (item.select && item.level == 4) {
-      // 将该节点的 `id` 添加到初始数组 `initArr` 中
+      // 将该节点的 id 添加到初始数组 initArr 中
       initArr.push(item.id)
     }
 
-    // 如果当前节点有子节点（`children`），并且子节点数组长度大于 0
+    // 如果当前节点有子节点（children），并且子节点数组长度大于 0
     if (item.children && item.children.length > 0) {
-      // 递归调用 `filterSelectArr`，继续遍历子节点
+      // 递归调用 filterSelectArr，继续遍历子节点
       filterSelectArr(item.children, initArr)
     }
   })
@@ -262,21 +262,21 @@ const handle = async () => {
   const arr = tree.value.getCheckedKeys()
   // getHalfCheckedKeys:若节点可被选中(show-checkbox 为 true)，则返回目前半选中的节点的 key 所组成的数组
   const arr1 = tree.value.getHalfCheckedKeys()
-  let permissionTd = arr.concat(arr1)
+  const permissionTd = arr.concat(arr1)
   // 下发权限
-  let result: any = await reqSetPermisstion(roleId as number, permissionTd)
+  const result: any = await reqSetPermisstion(roleId as number, permissionTd)
   if (result.code == 200) {
     //抽屉关闭
     drawer.value = false
     //提示信息
     ElMessage({ type: 'success', message: '分配权限成功' })
     //页面刷新
-    window.location.reload()
+    // window.location.reload()
   }
 }
 
 const deleteRole = async (id: number) => {
-  let result: any = await reqRemoveRole(id)
+  const result: any = await reqRemoveRole(id)
   if (result.code == 200) {
     ElMessage({ type: 'success', message: '删除成功' })
     //再次获取全部的已有的职位

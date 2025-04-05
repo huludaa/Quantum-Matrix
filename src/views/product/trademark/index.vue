@@ -1,5 +1,6 @@
 <template>
   <el-card class="box-card">
+    <!-- 添加品牌按钮 -->
     <el-button
       type="primary"
       size="default"
@@ -8,26 +9,34 @@
       v-has="`btn.Trademark.add`"
       >添加品牌</el-button
     >
+
+    <!-- 品牌列表表格 -->
     <el-table border :data="trademarkArr" style="margin: 10px 0">
+      <!-- 序号列 -->
       <el-table-column label="序号" width="80px" align="center" type="index"></el-table-column>
+      <!-- 品牌名称列 -->
       <el-table-column label="品牌名称" align="center">
-        <template #="{ row, $index }">
+        <template #="{ row }">
           <h1>{{ row.tmName }}</h1>
         </template>
       </el-table-column>
+      <!-- 品牌logo列 -->
       <el-table-column label="品牌logo" align="center">
-        <template #="{ row, $index }">
+        <template #="{ row }">
           <img :src="row.logoUrl" />
         </template>
       </el-table-column>
+      <!-- 操作列 -->
       <el-table-column label="品牌操作" align="center">
-        <template #="{ row, index }">
+        <template #="{ row }">
+          <!-- 编辑按钮 -->
           <el-button
             type="primary"
             size="small"
             icon="Edit"
             @click="updateTrademark(row)"
           ></el-button>
+          <!-- 删除确认框 -->
           <el-popconfirm
             :title="`确认删除${row.tmName}吗？`"
             width="200px"
@@ -40,6 +49,7 @@
         </template>
       </el-table-column>
     </el-table>
+    <!-- 分页器 -->
     <el-pagination
       v-model:current-page="pageNo"
       v-model:page-size="limit"
@@ -51,12 +61,14 @@
       @size-change="sizeChange"
     />
   </el-card>
-
+  <!-- 添加/修改品牌对话框 -->
   <el-dialog v-model="dialogFormVisible" :title="trademarkParams.id ? '修改品牌' : '添加品牌'">
     <el-form style="width: 80%" :model="trademarkParams" :rules="rules" ref="formRef">
+      <!-- 品牌名称输入框 -->
       <el-form-item label="品牌名称" label-width="100px" prop="tmName">
         <el-input placeholder="请输入品牌名称" v-model="trademarkParams.tmName"></el-input>
       </el-form-item>
+      <!-- 品牌LOGO上传 -->
       <el-form-item label="品牌LOGO" label-width="100px" prop="logoUrl">
         <el-upload
           class="avatar-uploader"
@@ -70,6 +82,7 @@
         </el-upload>
       </el-form-item>
     </el-form>
+    <!-- 对话框底部按钮 -->
     <template #footer>
       <el-button type="primary" size="default" @click="cancel">取消</el-button>
       <el-button type="primary" size="default" @click="confirm">确定</el-button>
@@ -86,26 +99,26 @@ import {
 import type { TradeMarkResponseData, Records, TradeMark } from '@/api/product/trademark/type'
 import { ElImage, ElMessage, type UploadProps } from 'element-plus'
 //当前页码
-let pageNo = ref<number>(1)
+const pageNo = ref<number>(1)
 //每一页展示多少条数据
-let limit = ref<number>(3)
+const limit = ref<number>(3)
 //存储已有品牌的总数
-let total = ref<number>(0)
+const total = ref<number>(0)
 //存储已有品牌的数据
-let trademarkArr = ref<Records>([])
+const trademarkArr = ref<Records>([])
 //控制对话框显示与隐藏
-let dialogFormVisible = ref<boolean>(false)
+const dialogFormVisible = ref<boolean>(false)
 //定义收集新增品牌数据
-let trademarkParams = reactive<TradeMark>({
-  tmName: '',
-  logoUrl: '',
+const trademarkParams = reactive<TradeMark>({
+  tmName: '', // 品牌名称
+  logoUrl: '', // 品牌logo
 })
 //获取el-form实例
 const formRef = ref()
-//获取已有品牌的接口封装为一个函数,参数：调用sizeChange（）前，先回到第一页
+//获取已有品牌的接口封装为一个函数,无参数回到第一页
 const getHasTrademark = async (pager = 1) => {
   pageNo.value = pager
-  let result: TradeMarkResponseData = await reqHasTrademark(pageNo.value, limit.value)
+  const result: TradeMarkResponseData = await reqHasTrademark(pageNo.value, limit.value)
   if (result.code == 200) {
     total.value = result.data.total
     trademarkArr.value = result.data.records
@@ -121,6 +134,7 @@ const sizeChange = () => {
 }
 
 const addTrademark = () => {
+  // 打开添加品牌对话框
   dialogFormVisible.value = true
   //清空上次的数据
   trademarkParams.tmName = ''
@@ -140,7 +154,7 @@ const updateTrademark = (row: TradeMark) => {
   formRef.value?.clearValidate('tmName')
   formRef.value?.clearValidate('logoUrl')
 }
-//
+
 const cancel = () => {
   dialogFormVisible.value = false
 }
@@ -148,7 +162,7 @@ const cancel = () => {
 const confirm = async () => {
   //发起请求之前，validate对整个表单进行校验
   await formRef.value.validate()
-  let result: any = await reqAddOrUpdateTrademark(trademarkParams)
+  const result: any = await reqAddOrUpdateTrademark(trademarkParams)
   if (result.code == 200) {
     dialogFormVisible.value = false
     ElMessage({

@@ -25,7 +25,7 @@ let mockUserList = [
 ]
 
 // 模拟的职位数据
-let mockRoleList = [
+const mockRoleList = [
   {
     id: 1,
     createTime: '2025-01-01 00:00:00',
@@ -162,7 +162,12 @@ Mock.mock('/api/acl/user/doAssignRole', 'post', (options) => {
   const data = JSON.parse(options.body)
   const user = mockUserList.find((user) => user.id === data.userId)
   if (user) {
-    user.roleName = mockRoleList.find((role) => role.id === data.roleIdList[0])?.roleName || ''
+    // 获取所有选中的角色名称，用逗号连接
+    const roleNames = data.roleIdList
+      .map((roleId: number) => mockRoleList.find((role) => role.id === roleId)?.roleName)
+      .filter(Boolean)
+      .join(',')
+    user.roleName = roleNames
   }
   return Mock.mock({
     code: 200,

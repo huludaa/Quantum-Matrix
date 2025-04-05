@@ -113,13 +113,13 @@ import type { AttrResponseData, Attr, AttrValue } from '@/api/product/attr/type'
 //获取分类的仓库
 import useCategoryStore from '@/store/module/category'
 import { ElMessage } from 'element-plus'
-let categoryStore = useCategoryStore()
+const categoryStore = useCategoryStore()
 //存储已有的属性与属性值
-let attrArr = ref<Attr[]>([])
+const attrArr = ref<Attr[]>([])
 //定义card组件内容切换变量
-let scene = ref<number>(0) //scene=0,显示table,scene=1,展示添加与修改属性结构
+const scene = ref<number>(0) //scene=0,显示table,scene=1,展示添加与修改属性结构
 //收集新增的属性的数据
-let attrParams = reactive<Attr>({
+const attrParams = reactive<Attr>({
   attrName: '', //新增的属性的名字
   attrValueList: [
     //新增的属性值数组
@@ -128,7 +128,7 @@ let attrParams = reactive<Attr>({
   categoryLevel: 3, //代表的是三级分类
 })
 //准备一个数组:将来存储对应的组件实例el-input
-let inputArr = ref<any>([])
+const inputArr = ref<any>([])
 //监听仓库三级分类ID变化
 watch(
   () => categoryStore.c3Id,
@@ -146,7 +146,7 @@ const getAttr = async () => {
   const { c1Id, c2Id, c3Id } = categoryStore
 
   //获取分类下的已有的属性与属性值
-  let result: AttrResponseData = await reqAttr(c1Id, c2Id, c3Id)
+  const result: AttrResponseData = await reqAttr(c1Id, c2Id, c3Id)
   if (result.code == 200) {
     attrArr.value = result.data
   }
@@ -193,7 +193,7 @@ const addAttrValue = () => {
 //保存按钮的回调
 const save = async () => {
   //发请求
-  let result: any = await reqAddOrUpdateAttr(attrParams)
+  const result: any = await reqAddOrUpdateAttr(attrParams)
 
   //添加属性|修改已有的属性已经成功
   if (result.code == 200) {
@@ -228,7 +228,7 @@ const toLook = (row: AttrValue, $index: number) => {
     return
   }
   //非法情况2
-  let repeat = attrParams.attrValueList.find((item) => {
+  const repeat = attrParams.attrValueList.find((item) => {
     //切记把当前失却焦点属性值对象从当前数组扣除判断
     if (item != row) {
       return item.valueName === row.valueName
@@ -262,7 +262,7 @@ const toEdit = (row: AttrValue, $index: number) => {
 //删除某一个已有的属性方法回调
 const deleteAttr = async (attrId: number) => {
   //发相应的删除已有的属性的请求
-  let result: any = await reqRemoveAttr(attrId)
+  const result: any = await reqRemoveAttr(attrId)
   //删除成功
   if (result.code == 200) {
     ElMessage({

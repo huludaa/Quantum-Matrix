@@ -60,7 +60,7 @@
         show-overflow-tooltip
       ></el-table-column>
       <el-table-column label="操作" width="330px" align="center">
-        <template #="{ row, index }">
+        <template #="{ row }">
           <el-button type="primary" size="small" icon="User" @click="setRole(row)"
             >分配角色</el-button
           >
@@ -155,7 +155,7 @@
 
 <script setup lang="ts">
 import useLayOutSettingStore from '@/store/module/setting'
-import { ref, onMounted, reactive, nextTick } from 'vue'
+import { ref, onMounted, reactive } from 'vue'
 import {
   reqUserInfo,
   reqAddOrUpdateUser,
@@ -173,43 +173,43 @@ import type {
   AllRole,
 } from '@/api/acl/user/type'
 import { ElMessage } from 'element-plus'
-let pageNO = ref<number>(1)
-let pageSize = ref<number>(5)
-let total = ref<number>(0)
-let userArr = ref<Records>([])
+const pageNO = ref<number>(1)
+const pageSize = ref<number>(5)
+const total = ref<number>(0)
+const userArr = ref<Records>([])
 //控制新增用户和编辑抽屉的显示与隐藏
-let drawer = ref<boolean>(false)
+const drawer = ref<boolean>(false)
 //控制分配角色抽屉的显示与隐藏
-let drawer1 = ref<boolean>(false)
+const drawer1 = ref<boolean>(false)
 //收集用户信息的响应式数据
-let userParams = reactive<User>({
+const userParams = reactive<User>({
   username: '',
   name: '',
   password: '',
 })
 // 存储全部职位的数据
-let allRole = ref<AllRole>([])
+const allRole = ref<AllRole>([])
 // 存储当前用户已有的职位
-let userRole = ref<AllRole>([])
+const userRole = ref<AllRole>([])
 //获取form组件实例
-let formRef = ref<any>()
+const formRef = ref<any>()
 //控制顶部全选复选框不确定的样式
 const isIndeterminate = ref<boolean>(true)
 //收集顶部复选框全选的数据
 const checkAll = ref<boolean>(false)
 // 准备一个数组存储批量删除的用户id
-let selectIdArr = ref<User[]>([])
+const selectIdArr = ref<User[]>([])
 // 定义存储搜索关键字的变量
-let keyword = ref<string>('')
+const keyword = ref<string>('')
 // 充值功能的仓库实例化
-let settingStore = useLayOutSettingStore()
+const settingStore = useLayOutSettingStore()
 
 onMounted(() => {
   getHasUser()
 })
 const getHasUser = async (pager = 1) => {
   pageNO.value = pager
-  let result: UserResponseData = await reqUserInfo(pageNO.value, pageSize.value, keyword.value)
+  const result: UserResponseData = await reqUserInfo(pageNO.value, pageSize.value, keyword.value)
 
   if (result.code == 200) {
     total.value = result.data.total
@@ -253,7 +253,7 @@ const updateUser = (row: User) => {
 const save = async () => {
   await formRef.value.validate()
   //保存按钮:添加新的用户|更新已有的用户账号信息
-  let result: any = await reqAddOrUpdateUser(userParams)
+  const result: any = await reqAddOrUpdateUser(userParams)
   //添加或者更新成功
   if (result.code == 200) {
     //关闭抽屉
@@ -297,7 +297,7 @@ const setRole = async (row: User) => {
   drawer1.value = true
   Object.assign(userParams, row)
   //获取全部职位的数据与当前用户已有的职位
-  let result: AllRoleResponseData = await reqAllRole(userParams.id as number)
+  const result: AllRoleResponseData = await reqAllRole(userParams.id as number)
   console.log(result)
 
   if (result.code == 200) {
@@ -323,14 +323,14 @@ const handleCheckedCitiesChange = (value: string[]) => {
 //确定按钮的回调(分配职位)
 const confirmClick = async () => {
   //收集参数
-  let data: SetRoleData = {
+  const data: SetRoleData = {
     userId: userParams.id as number,
     roleIdList: userRole.value.map((item) => {
       return item.id as number
     }),
   }
   //分配用户的职位
-  let result: any = await reqSetUserRole(data)
+  const result: any = await reqSetUserRole(data)
   if (result.code == 200) {
     //提示信息
     ElMessage({ type: 'success', message: '分配职务成功' })
@@ -343,7 +343,7 @@ const confirmClick = async () => {
 
 // 删除某个用户
 const deleteUser = async (userId: number) => {
-  let result: any = await reqRemoveUser(userId)
+  const result: any = await reqRemoveUser(userId)
   if (result.code == 200) {
     ElMessage({ type: 'success', message: '删除成功' })
     getHasUser(userArr.value.length > 1 ? pageNO.value : pageNO.value - 1)
@@ -358,11 +358,11 @@ const selectChange = (value: any) => {
 //批量删除按钮的回调
 const deleteSelectUser = async () => {
   //整理批量删除的参数
-  let idsList: any = selectIdArr.value.map((item) => {
+  const idsList: any = selectIdArr.value.map((item) => {
     return item.id
   })
   //批量删除的请求
-  let result: any = await reqSelectUser(idsList)
+  const result: any = await reqSelectUser(idsList)
   console.log('result', result)
 
   if (result.code == 200) {

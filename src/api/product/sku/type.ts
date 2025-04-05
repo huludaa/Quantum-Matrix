@@ -27,6 +27,12 @@ export interface SkuData {
   skuDefaultImg?: string //sku图片地址
   isSale?: number //控制商品的上架与下架
   id?: number
+  skuImageList?: {
+    id: number
+    imgName: string
+    imgUrl: string
+    skuId: number
+  }[] //SKU图片列表
 }
 
 //获取SKU接口返回的数据ts类型
