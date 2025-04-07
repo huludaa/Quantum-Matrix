@@ -11,7 +11,7 @@
         <!-- 登录表单：绑定表单数据、验证规则和表单引用 -->
         <el-form class="login_form" :model="loginForm" :rules="rules" ref="loginForms">
           <h1>Hello!</h1>
-          <h3>欢迎来到量子计算资源管理平台</h3>
+          <h3>欢迎来到企管通后台管理平台</h3>
 
           <!-- 用户名输入框：带图标和验证 -->
           <el-form-item prop="username">
