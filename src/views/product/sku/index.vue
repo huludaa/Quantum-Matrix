@@ -29,6 +29,7 @@
             size="small"
             :icon="row.isSale == 1 ? 'Top' : 'Bottom'"
             @click="updateSale(row)"
+            v-has="`btn.Sku.put`"
           ></el-button>
           <el-button
             type="primary"
@@ -36,6 +37,7 @@
             size="small"
             icon="Edit"
             @click="updateSku(row)"
+            v-has="`btn.Sku.update`"
           ></el-button>
           <el-button
             type="primary"
@@ -50,7 +52,13 @@
             @confirm="removeSku(row.id)"
           >
             <template #reference>
-              <el-button type="primary" size="small" icon="Delete" title="删除"></el-button>
+              <el-button
+                type="danger"
+                size="small"
+                icon="Delete"
+                title="删除"
+                v-has="`btn.Sku.delete`"
+              ></el-button>
             </template>
           </el-popconfirm>
         </template>

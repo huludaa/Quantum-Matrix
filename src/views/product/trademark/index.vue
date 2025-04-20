@@ -35,6 +35,7 @@
             size="small"
             icon="Edit"
             @click="updateTrademark(row)"
+            v-has="`btn.Trademark.update`"
           ></el-button>
           <!-- 删除确认框 -->
           <el-popconfirm
@@ -44,7 +45,9 @@
             icon-color="red"
             @confirm="removeTrademark(row.id)"
           >
-            <template #reference> <el-button type="danger" size="small" icon="Delete" /></template>
+            <template #reference>
+              <el-button type="danger" size="small" icon="Delete" v-has="`btn.Trademark.delete`"
+            /></template>
           </el-popconfirm>
         </template>
       </el-table-column>

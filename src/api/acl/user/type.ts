@@ -13,7 +13,7 @@ export interface User {
   password?: string
   name?: string
   phone?: null
-  roleName?: string
+  roleName: string
 }
 //数组包含全部的用户信息
 export type Records = User[]

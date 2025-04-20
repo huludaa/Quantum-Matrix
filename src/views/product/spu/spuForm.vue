@@ -105,7 +105,7 @@
         <el-table-column label="操作" width="120px">
           <template #="{ row }">
             <el-button
-              type="primary"
+              type="danger"
               size="small"
               icon="Delete"
               @click="deleteSaleAttr(row.baseSaleAttrId)"

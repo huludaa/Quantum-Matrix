@@ -1,31 +1,43 @@
 import Mock from 'mockjs'
 import dayjs from 'dayjs'
-// 模拟的用户数据
-let mockUserList = [
+import type { Records, AllRole } from '@/api/acl/user/type'
+
+// 模拟用户列表数据
+export const mockUserList: Records = [
   {
     id: 1,
     createTime: '2025-01-01 00:00:00',
     updateTime: '2025-01-01 00:00:00',
-    username: 'admin',
+    username: '凡尔赛的神',
     password: '123456',
-    name: '管理员',
+    name: '张三',
     phone: null,
-    roleName: '超级管理员',
+    roleName: '权限管理员',
   },
   {
     id: 2,
     createTime: '2025-01-01 00:00:00',
     updateTime: '2025-01-01 00:00:00',
-    username: 'user',
+    username: '喜欢吃的猪八戒',
     password: '123456',
-    name: '普通用户',
+    name: '李四',
     phone: null,
-    roleName: '普通用户',
+    roleName: '商品管理员',
+  },
+  {
+    id: 3,
+    createTime: '2025-01-01 00:00:00',
+    updateTime: '2025-01-01 00:00:00',
+    username: '未来的亿万富翁',
+    password: '123456',
+    name: 'admin',
+    phone: null,
+    roleName: '超级管理员',
   },
 ]
 
 // 模拟的职位数据
-const mockRoleList = [
+const mockRoleList: AllRole = [
   {
     id: 1,
     createTime: '2025-01-01 00:00:00',
@@ -37,8 +49,15 @@ const mockRoleList = [
     id: 2,
     createTime: '2025-01-01 00:00:00',
     updateTime: '2025-01-01 00:00:00',
-    name: '普通用户',
-    roleName: '普通用户',
+    name: '商品管理员',
+    roleName: '商品管理员',
+  },
+  {
+    id: 3,
+    createTime: '2025-01-01 00:00:00',
+    updateTime: '2025-01-01 00:00:00',
+    name: '权限管理人员',
+    roleName: '权限管理人员',
   },
 ]
 
@@ -62,7 +81,7 @@ Mock.mock(/\/api\/acl\/user\/\d+\/\d+\/\?username=\w*/, 'get', (options) => {
 
   // 过滤用户列表
   const filteredUsers = mockUserList.filter((user) =>
-    username ? user.username.includes(username) : true,
+    username ? user.username?.includes(username) : true,
   )
 
   // 返回分页数据
@@ -106,7 +125,7 @@ Mock.mock('/api/acl/user/update', 'put', (options) => {
   const index = mockUserList.findIndex((item) => item.id === data.id)
   if (index !== -1) {
     mockUserList[index] = { ...mockUserList[index], ...data }
-    mockUserList[index].updateTime = new Date().toISOString()
+    mockUserList[index].updateTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
   }
   return Mock.mock({
     code: 200,
@@ -145,7 +164,15 @@ Mock.mock('/api/acl/user/batchRemove/', 'delete', (options) => {
 Mock.mock(/\/api\/acl\/user\/toAssign\/\d+/, 'get', (options) => {
   const userId = options.url.split('/').pop()
   const user = mockUserList.find((user) => user.id === Number(userId))
-  const assignRoles = user ? mockRoleList.filter((role) => role.roleName === user.roleName) : []
+
+  // 获取用户当前拥有的所有角色
+  const userRoleNames = user?.roleName ? user.roleName.split(',') : []
+
+  // 过滤出用户已分配的角色
+  const assignRoles = mockRoleList.filter(
+    (role) => role.roleName && userRoleNames.includes(role.roleName),
+  )
+
   return Mock.mock({
     code: 200,
     message: '成功',
@@ -161,14 +188,17 @@ Mock.mock(/\/api\/acl\/user\/toAssign\/\d+/, 'get', (options) => {
 Mock.mock('/api/acl/user/doAssignRole', 'post', (options) => {
   const data = JSON.parse(options.body)
   const user = mockUserList.find((user) => user.id === data.userId)
+
   if (user) {
-    // 获取所有选中的角色名称，用逗号连接
-    const roleNames = data.roleIdList
+    // 获取所有选中的角色名称
+    const selectedRoleNames = data.roleIdList
       .map((roleId: number) => mockRoleList.find((role) => role.id === roleId)?.roleName)
-      .filter(Boolean)
-      .join(',')
-    user.roleName = roleNames
+      .filter((name: string | undefined): name is string => name !== undefined)
+
+    // 更新用户的角色名称
+    user.roleName = selectedRoleNames.join(',')
   }
+
   return Mock.mock({
     code: 200,
     message: '成功',

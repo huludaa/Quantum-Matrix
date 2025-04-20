@@ -1,11 +1,18 @@
 import Mock from 'mockjs'
-import type { TradeMarkResponseData, TradeMark } from '@/api/product/trademark/type'
+import type { TradeMark } from '@/api/product/trademark/type'
 
 // 模拟品牌数据
-const mockTrademarkList: TradeMark[] = [
-  { id: 1, tmName: '品牌1', logoUrl: 'https://picsum.photos/100/100' },
-  { id: 2, tmName: '品牌2', logoUrl: 'https://picsum.photos/100/100' },
-  { id: 3, tmName: '品牌3', logoUrl: 'https://picsum.photos/100/100' },
+const mockTrademarkList = [
+  { id: 1, tmName: '苹果', logoUrl: 'https://picsum.photos/100/100' },
+  { id: 2, tmName: '华为', logoUrl: 'https://picsum.photos/100/100' },
+  { id: 3, tmName: '小米', logoUrl: 'https://picsum.photos/100/100' },
+  { id: 4, tmName: '耐克', logoUrl: 'https://picsum.photos/100/100' },
+  { id: 5, tmName: '阿迪达斯', logoUrl: 'https://picsum.photos/100/100' },
+  { id: 6, tmName: '联想', logoUrl: 'https://picsum.photos/100/100' },
+  { id: 7, tmName: '李宁', logoUrl: 'https://picsum.photos/100/100' },
+  { id: 8, tmName: '优衣库', logoUrl: 'https://picsum.photos/100/100' },
+  { id: 9, tmName: 'ZARA', logoUrl: 'https://picsum.photos/100/100' },
+  { id: 10, tmName: '戴尔', logoUrl: 'https://picsum.photos/100/100' },
 ]
 
 // 模拟获取已有品牌接口

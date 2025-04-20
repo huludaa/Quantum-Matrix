@@ -1,4 +1,3 @@
-<!-- 优化：更新其他用户信息时不用window.location.reload(),只有在更新当前用户时才使用 -->
 <template>
   <el-card>
     <el-form :inline="true" class="form">
@@ -15,12 +14,15 @@
   </el-card>
 
   <el-card style="margin: 10px 0px">
-    <el-button type="primary" size="default" @click="addUser">添加用户</el-button>
+    <el-button type="primary" size="default" @click="addUser" v-has="`btn.User.add`"
+      >添加用户</el-button
+    >
     <el-button
       type="primary"
       size="default"
       :disabled="selectIdArr.length ? false : true"
       @click="deleteSelectUser"
+      v-has="`btn.User.delete`"
     >
       批量删除
     </el-button>
@@ -47,24 +49,23 @@
         prop="roleName"
         show-overflow-tooltip
       ></el-table-column>
-      <el-table-column
-        label="创建时间"
-        align="center"
-        prop="createTime"
-        show-overflow-tooltip
-      ></el-table-column>
-      <el-table-column
-        label="更新时间"
-        align="center"
-        prop="updateTime"
-        show-overflow-tooltip
-      ></el-table-column>
       <el-table-column label="操作" width="330px" align="center">
         <template #="{ row }">
-          <el-button type="primary" size="small" icon="User" @click="setRole(row)"
+          <el-button
+            type="primary"
+            size="small"
+            icon="User"
+            @click="setRole(row)"
+            v-has="`btn.User.assign`"
             >分配角色</el-button
           >
-          <el-button type="primary" size="small" icon="Edit" @click="updateUser(row)">
+          <el-button
+            type="primary"
+            size="small"
+            icon="Edit"
+            @click="updateUser(row)"
+            v-has="`btn.User.update`"
+          >
             编辑
           </el-button>
           <!-- 删除确认框 -->
@@ -74,7 +75,9 @@
             @confirm="deleteUser(row.id)"
           >
             <template #reference>
-              <el-button type="primary" size="small" icon="Delete">删除</el-button>
+              <el-button type="danger" size="small" icon="Delete" v-has="`btn.User.delete`"
+                >删除</el-button
+              >
             </template>
           </el-popconfirm>
         </template>
@@ -186,6 +189,7 @@ const userParams = reactive<User>({
   username: '',
   name: '',
   password: '',
+  roleName: '',
 })
 // 存储全部职位的数据
 const allRole = ref<AllRole>([])
@@ -253,7 +257,7 @@ const updateUser = (row: User) => {
 const save = async () => {
   await formRef.value.validate()
   //保存按钮:添加新的用户|更新已有的用户账号信息
-  const result: any = await reqAddOrUpdateUser(userParams)
+  const result = await reqAddOrUpdateUser(userParams)
   //添加或者更新成功
   if (result.code == 200) {
     //关闭抽屉
@@ -298,7 +302,6 @@ const setRole = async (row: User) => {
   Object.assign(userParams, row)
   //获取全部职位的数据与当前用户已有的职位
   const result: AllRoleResponseData = await reqAllRole(userParams.id as number)
-  console.log(result)
 
   if (result.code == 200) {
     //存储全部职位
@@ -306,6 +309,7 @@ const setRole = async (row: User) => {
     //存储当前用户已有的职位
     userRole.value = result.data.assignRoles
   }
+  console.log(userRole.value)
 }
 //顶部的全部复选框的change事件
 const handleCheckAllChange = (val: boolean) => {
@@ -316,7 +320,7 @@ const handleCheckAllChange = (val: boolean) => {
 const handleCheckedCitiesChange = (value: string[]) => {
   //顶部复选框的勾选数据
   //代表:勾选上的项目个数与全部的职位个数相等，顶部的复选框勾选上
-  checkAll.value = allRole.value.length == value.length
+  checkAll.value = allRole.value.length === value.length
   //不确定的样式
   isIndeterminate.value = allRole.value.length !== value.length
 }

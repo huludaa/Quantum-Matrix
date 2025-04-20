@@ -11,13 +11,13 @@ export interface Permisstion {
   updateTime: string
   pid: number
   name: string
-  code: null
-  toCode: null
-  type: number
-  status: null
+  code: string
+  toCode: string
+  type?: number
+  status?: null
   level: number
   children?: PermisstionList
-  select: boolean
+  select?: boolean
 }
 export type PermisstionList = Permisstion[]
 //菜单接口返回的数据类型

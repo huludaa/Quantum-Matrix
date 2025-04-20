@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import Mock from 'mockjs'
 
 // 模拟的 SKU 数据
@@ -17,8 +18,8 @@ const mockSkuList = [
     skuAttrValueList: [
       {
         id: 1001,
-        createTime: '2023-01-01 10:00:00',
-        updateTime: '2023-01-01 10:00:00',
+        createTime: '2025-01-01 10:00:00',
+        updateTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
         attrId: 101,
         valueId: 201,
         attrName: '品牌',
@@ -42,7 +43,7 @@ const mockSkuList = [
     skuSaleAttrValueList: [
       {
         id: 2001,
-        createTime: '2023-01-01 10:00:01',
+        createTime: '2025-01-01 10:00:01',
         saleAttrId: 1,
         saleAttrName: '颜色',
         saleAttrValueId: 301,

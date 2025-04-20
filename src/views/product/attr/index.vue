@@ -10,6 +10,7 @@
           size="default"
           icon="Plus"
           :disabled="categoryStore.c3Id ? false : true"
+          v-has="`btn.Attr.add`"
           >添加属性</el-button
         >
         <el-table border style="margin: 10px 0px" :data="attrArr">
@@ -34,6 +35,7 @@
                 size="small"
                 icon="Edit"
                 @click="updateAttr(row)"
+                v-has="`btn.Attr.update`"
               ></el-button>
               <el-popconfirm
                 :title="`你确定删除${row.attrName}?`"
@@ -41,7 +43,12 @@
                 @confirm="deleteAttr(row.id)"
               >
                 <template #reference>
-                  <el-button type="primary" size="small" icon="Delete"></el-button>
+                  <el-button
+                    type="danger"
+                    size="small"
+                    icon="Delete"
+                    v-has="`btn.Attr.delete`"
+                  ></el-button>
                 </template>
               </el-popconfirm>
             </template>
@@ -83,7 +90,7 @@
           <el-table-column label="属性值操作">
             <template #="{ row, $index }">
               <el-button
-                type="primary"
+                type="danger"
                 size="small"
                 icon="Delete"
                 @click="removeAttrValue($index)"

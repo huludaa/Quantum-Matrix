@@ -11,8 +11,8 @@
       <el-scrollbar class="scrollbar">
         <el-menu
           :default-active="route.path"
-          text-color="rgb(221, 179, 100)"
-          active-text-color="#228be6"
+          text-color="#FFD700"
+          active-text-color="#3B9BFF"
           :collapse="LayOutSettingStore.fold ? true : false"
         >
           <Menu :menuList="userStore.menuRoutes"></Menu>
@@ -59,11 +59,11 @@ const route = useRoute()
         background-color: $base-menu-background;
       }
       .el-menu-item:hover {
-        background-color: rgb(91, 111, 119) !important;
+        background-color: #495057 !important;
       }
       // 有子菜单的菜单项悬停
       .el-sub-menu__title:hover {
-        background-color: rgb(91, 111, 119) !important;
+        background-color: #495057 !important;
       }
     }
   }

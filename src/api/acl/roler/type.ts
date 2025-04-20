@@ -46,6 +46,7 @@ export interface MunuData {
   select: boolean
 }
 export type MenuList = MunuData[]
+
 //菜单权限与按钮权限数据的ts类型
 export interface MenuResponseData extends ResponseData {
   data: MenuList

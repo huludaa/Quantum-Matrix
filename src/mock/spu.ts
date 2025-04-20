@@ -43,8 +43,8 @@ let mockSpuList = [
         baseSaleAttrId: 1,
         saleAttrName: '颜色',
         spuSaleAttrValueList: [
-          { id: 1, baseSaleAttrId: 1, saleAttrValueName: '钛金属原色' },
-          { id: 2, baseSaleAttrId: 1, saleAttrValueName: '深空黑' },
+          { id: 1, baseSaleAttrId: 1, saleAttrValueName: '黑色' },
+          { id: 2, baseSaleAttrId: 1, saleAttrValueName: '白色' },
         ],
       },
       {
@@ -54,7 +54,6 @@ let mockSpuList = [
         spuSaleAttrValueList: [
           { id: 3, baseSaleAttrId: 2, saleAttrValueName: '128GB' },
           { id: 4, baseSaleAttrId: 2, saleAttrValueName: '256GB' },
-          { id: 5, baseSaleAttrId: 2, saleAttrValueName: '512GB' },
         ],
       },
     ],
@@ -334,16 +333,16 @@ let mockSkuList = [
     category3Id: 1,
     spuId: 1,
     tmId: 1,
-    skuName: 'iPhone 15 Pro 钛金属原色 256GB',
+    skuName: 'iPhone 15 Pro 黑色 256GB',
     price: 8999,
     weight: '187g',
-    skuDesc: 'iPhone 15 Pro 钛金属原色 256GB版本',
+    skuDesc: 'iPhone 15 Pro 黑色 256GB版本',
     skuAttrValueList: [
       {
         attrId: 1,
         valueId: 1,
         attrName: '颜色',
-        valueName: '钛金属原色',
+        valueName: '黑色',
       },
       {
         attrId: 2,
@@ -357,7 +356,7 @@ let mockSkuList = [
         saleAttrId: 1,
         saleAttrValueId: 1,
         saleAttrName: '颜色',
-        saleAttrValueName: '钛金属原色',
+        saleAttrValueName: '黑色',
       },
       {
         saleAttrId: 2,
@@ -400,24 +399,24 @@ let mockSkuList = [
     category3Id: 1,
     spuId: 3,
     tmId: 3,
-    skuName: '小米14 Ultra 黑色 1TB',
+    skuName: '小米14 Ultra 白色 1TB',
     price: 6999,
     weight: '220g',
-    skuDesc: '小米14 Ultra 黑色 1TB 摄影套装',
+    skuDesc: '小米14 Ultra 白色 1TB 摄影套装',
     skuAttrValueList: [
       {
         attrId: 1,
-        valueId: 8,
+        valueId: 9,
         attrName: '颜色',
-        valueName: '黑色',
+        valueName: '白色',
       },
     ],
     skuSaleAttrValueList: [
       {
         saleAttrId: 1,
-        saleAttrValueId: 8,
+        saleAttrValueId: 9,
         saleAttrName: '颜色',
-        saleAttrValueName: '黑色',
+        saleAttrValueName: '白色',
       },
     ],
     skuDefaultImg: 'https://picsum.photos/100/100',
@@ -497,36 +496,36 @@ let mockSkuList = [
     category3Id: 3,
     spuId: 6,
     tmId: 4,
-    skuName: '耐克DRI-FIT运动T恤 黑色 L',
+    skuName: '耐克DRI-FIT运动T恤 白色 M',
     price: 299,
     weight: '180g',
-    skuDesc: '耐克速干运动T恤 黑色 L码',
+    skuDesc: '耐克速干运动T恤 白色 M码',
     skuAttrValueList: [
       {
         attrId: 3,
-        valueId: 16,
+        valueId: 15,
         attrName: '尺码',
-        valueName: 'L',
+        valueName: 'M',
       },
       {
         attrId: 1,
-        valueId: 17,
+        valueId: 18,
         attrName: '颜色',
-        valueName: '黑色',
+        valueName: '白色',
       },
     ],
     skuSaleAttrValueList: [
       {
         saleAttrId: 3,
-        saleAttrValueId: 16,
+        saleAttrValueId: 15,
         saleAttrName: '尺码',
-        saleAttrValueName: 'L',
+        saleAttrValueName: 'M',
       },
       {
         saleAttrId: 1,
-        saleAttrValueId: 17,
+        saleAttrValueId: 18,
         saleAttrName: '颜色',
-        saleAttrValueName: '黑色',
+        saleAttrValueName: '白色',
       },
     ],
     skuDefaultImg: 'https://picsum.photos/100/100',
@@ -536,14 +535,14 @@ let mockSkuList = [
     category3Id: 3,
     spuId: 7,
     tmId: 5,
-    skuName: '阿迪达斯三叶草T恤 白色 M',
+    skuName: '阿迪达斯三叶草T恤 黑色 M',
     price: 249,
     weight: '170g',
-    skuDesc: '阿迪达斯经典logo T恤 白色 M码',
+    skuDesc: '阿迪达斯经典logo T恤 黑色 M码',
     skuAttrValueList: [
       {
         attrId: 3,
-        valueId: 20,
+        valueId: 19,
         attrName: '尺码',
         valueName: 'M',
       },
@@ -551,7 +550,7 @@ let mockSkuList = [
     skuSaleAttrValueList: [
       {
         saleAttrId: 3,
-        saleAttrValueId: 20,
+        saleAttrValueId: 19,
         saleAttrName: '尺码',
         saleAttrValueName: 'M',
       },
@@ -570,7 +569,7 @@ let mockSkuList = [
     skuAttrValueList: [
       {
         attrId: 3,
-        valueId: 22,
+        valueId: 21,
         attrName: '尺码',
         valueName: 'S',
       },
@@ -578,7 +577,7 @@ let mockSkuList = [
     skuSaleAttrValueList: [
       {
         saleAttrId: 3,
-        saleAttrValueId: 22,
+        saleAttrValueId: 21,
         saleAttrName: '尺码',
         saleAttrValueName: 'S',
       },
@@ -654,6 +653,7 @@ let mockSkuList = [
     skuDefaultImg: 'https://picsum.photos/100/100',
   },
 ]
+
 // 获取已有的SPU数据
 Mock.mock(/\/api\/product\/(\d+)\/(\d+)\?category3Id=(\d+)/, 'get', (options) => {
   // 方法一：简单正则匹配
@@ -691,6 +691,7 @@ Mock.mock(/\/api\/product\/(\d+)\/(\d+)\?category3Id=(\d+)/, 'get', (options) =>
     },
   })
 })
+
 // 获取全部品牌数据
 Mock.mock('/api/product/baseTrademark/getTrademarkList', 'get', () => {
   return Mock.mock({

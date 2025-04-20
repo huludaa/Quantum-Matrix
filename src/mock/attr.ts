@@ -1,4 +1,5 @@
 import Mock from 'mockjs'
+import type { AttrList } from '@/api/product/attr/type'
 
 // 模拟的一级分类数据
 const mockCategory1List = [
@@ -23,7 +24,7 @@ const mockCategory3List = [
 ]
 
 // 模拟的属性数据
-const mockAttrList = [
+const mockAttrList: AttrList = [
   // 电子产品 > 手机 > 智能手机 的属性
   {
     id: 1,
@@ -31,8 +32,8 @@ const mockAttrList = [
     categoryId: 1, // 对应三级分类ID=1（智能手机）
     categoryLevel: 3,
     attrValueList: [
-      { id: 1, valueName: '黑色' },
-      { id: 2, valueName: '白色' },
+      { id: 1, valueName: '黑色', attrId: 1 },
+      { id: 2, valueName: '白色', attrId: 1 },
     ],
   },
   {
@@ -41,8 +42,8 @@ const mockAttrList = [
     categoryId: 1, // 对应三级分类ID=1（智能手机）
     categoryLevel: 3,
     attrValueList: [
-      { id: 3, valueName: '128GB' },
-      { id: 4, valueName: '256GB' },
+      { id: 3, valueName: '128GB', attrId: 2 },
+      { id: 4, valueName: '256GB', attrId: 2 },
     ],
   },
   // 服装 > 男装 > 男士T恤 的属性

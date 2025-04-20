@@ -2,12 +2,20 @@
 //sass使用@use，less使用@import
 @use './reset.scss';
 /* 自定义滚动条样式（仅适用于 WebKit 内核浏览器） */
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background: purple;
-}
-::-webkit-scrollbar-thumb {
-  background: green;
-}
+// ::-webkit-scrollbar {
+//   width: 10px;
+//   height: 10px;
+// }
+// ::-webkit-scrollbar-track {
+//   background: #f1f7fe; /* 轨道颜色*/
+//   border-radius: 5px;
+// }
+// ::-webkit-scrollbar-thumb {
+//   background: #1c7fd1; /* 滑块颜色*/
+//   border-radius: 5px;
+//   border: 2px solid #f1f7fe; /* 边框增强对比 */
+// }
+
+// ::-webkit-scrollbar-thumb:hover {
+//   background: #228be6; /* 悬停时主色变亮 */
+// }

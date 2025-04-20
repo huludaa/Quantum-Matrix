@@ -34,7 +34,7 @@ const useUserStore = defineStore('User', {
   actions: {
     //用户登录的方法
     async userLogin(data: loginFormData) {
-      let result: loginResponseData = await reqLogin(data)
+      const result: loginResponseData = await reqLogin(data)
       if (result.code === 200) {
         this.token = result.data
         localStorage.setItem('TOKEN', result.data) //本地存储一份token，防止更新时不见了
@@ -45,7 +45,7 @@ const useUserStore = defineStore('User', {
     },
     // 获取用户信息方法
     async userInfo() {
-      let result: any = await reqUserInfo()
+      const result: any = await reqUserInfo()
       if (result.code == 200) {
         //存储用户基本信息
         this.username = result.data.name
@@ -69,7 +69,7 @@ const useUserStore = defineStore('User', {
     },
     // 用户退出方法
     async userLogout() {
-      let result = await reqLogout()
+      const result = await reqLogout()
       if (result.code == 200) {
         // 清空状态
         this.username = ''

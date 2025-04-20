@@ -12,7 +12,9 @@
   </el-card>
 
   <el-card style="margin: 10px 0">
-    <el-button type="primary" size="default" icon="Edit" @click="addRole">添加职位</el-button>
+    <el-button type="primary" size="default" icon="Edit" @click="addRole" v-has="`btn.Role.add`"
+      >添加职位</el-button
+    >
 
     <el-table border :data="allRole" style="margin: 20px 0">
       <el-table-column
@@ -42,10 +44,21 @@
       ></el-table-column>
       <el-table-column label="操作" align="center" width="280px" show-overflow-tooltip>
         <template #="{ row }">
-          <el-button type="primary" size="small" icon="User" @click="setPermisstion(row)"
+          <el-button
+            type="primary"
+            size="small"
+            icon="User"
+            @click="setPermisstion(row)"
+            v-has="`btn.Role.assign`"
             >分配权限</el-button
           >
-          <el-button type="primary" size="small" icon="Edit" @click="updateRole(row)">
+          <el-button
+            type="primary"
+            size="small"
+            icon="Edit"
+            @click="updateRole(row)"
+            v-has="`btn.Role.update`"
+          >
             编辑
           </el-button>
           <el-popconfirm
@@ -54,7 +67,9 @@
             @confirm="deleteRole(row.id)"
           >
             <template #reference>
-              <el-button type="primary" size="small" icon="Delete">删除</el-button>
+              <el-button type="danger" size="small" icon="Delete" v-has="`btn.Role.delete`"
+                >删除</el-button
+              >
             </template>
           </el-popconfirm>
         </template>

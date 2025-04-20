@@ -1,4 +1,4 @@
-/** * 登录页面组件 * 实现用户登录功能，包含表单验证、登录状态管理和路由跳转 */
+<!-- 登录页面组件 实现用户登录功能，包含表单验证、登录状态管理和路由跳转  -->
 
 <template>
   <div class="login_container">
@@ -30,9 +30,9 @@
 
           <!-- 登录按钮：带加载状态 -->
           <el-form-item>
-            <el-button :loading="load" class="login_btn" type="primary" size="100%" @click="login"
-              >登录</el-button
-            >
+            <el-button :loading="load" class="login_btn" type="primary" size="100%" @click="login">
+              登录
+            </el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -54,8 +54,8 @@ import { useRoute, useRouter } from 'vue-router'
 
 // 定义登录表单数据，使用reactive实现响应式
 const loginForm = reactive({
-  username: 'admin',
-  password: '111111',
+  username: '未来的亿万富翁',
+  password: '123456',
 })
 
 const userStore = useUserStore() // 用户状态管理
@@ -123,10 +123,7 @@ const login = async () => {
   } catch (error) {
     load.value = false // 关闭加载状态
     // 显示错误提示
-    ElNotification({
-      type: 'error',
-      message: (error as Error).message,
-    })
+    ElNotification('登录失败')
   }
 }
 </script>
@@ -136,7 +133,7 @@ const login = async () => {
 .login_container {
   width: 100%;
   height: 100vh;
-  background: url('@/assets/images/background.jpg') no-repeat;
+  background: url('@/assets/images/background.png') no-repeat;
   background-size: cover;
 }
 
